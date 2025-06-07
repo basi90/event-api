@@ -35,7 +35,7 @@ public class EventService {
 
     public EventOutputDto getEventById(Long id) {
         Event event = inMemoryRepo.getEventById(id)
-                .orElseThrow(() -> new RuntimeException("Event not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Event with id: " + id + " not found"));
         return eventMapper.convertEventIntoDto(event);
     }
 }

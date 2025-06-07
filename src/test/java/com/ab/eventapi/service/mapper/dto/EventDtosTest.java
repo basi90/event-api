@@ -1,6 +1,5 @@
 package com.ab.eventapi.service.mapper.dto;
 
-import com.ab.eventapi.model.Event;
 import com.ab.eventapi.service.mapper.dto.event.EventInputDto;
 import com.ab.eventapi.service.mapper.dto.event.EventListDto;
 import com.ab.eventapi.service.mapper.dto.event.EventOutputDto;
