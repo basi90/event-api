@@ -49,6 +49,42 @@ public class EventControllerTest {
     }
 
     @Test
+    void testCreateEvent_withTooShortTitle_throwsInvalidInputException() {
+        EventInputDto dto = new EventInputDto(
+                "te", // too short
+                "description",
+                fixedDateTime
+        );
+
+        given()
+                .contentType(ContentType.JSON)
+                .body(dto)
+                .when()
+                .post("/events")
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .body("message", containsString("Title must be at least 3 characters"));
+    }
+
+    @Test
+    void testCreateEvent_withTooShortDescription_throwsInvalidInputException() {
+        EventInputDto dto = new EventInputDto(
+                "test", // too short
+                "de",
+                fixedDateTime
+        );
+
+        given()
+                .contentType(ContentType.JSON)
+                .body(dto)
+                .when()
+                .post("/events")
+                .then()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .body("message", containsString("Description must be at least 3 characters"));
+    }
+
+    @Test
     void testCreateEvent_withInvalidInput_returns400() {
         EventInputDto dto = new EventInputDto(
                 "",
