@@ -7,6 +7,7 @@ import com.ab.eventapi.service.mapper.EventMapper;
 import com.ab.eventapi.service.mapper.dto.event.EventInputDto;
 import com.ab.eventapi.service.mapper.dto.event.EventListDto;
 import com.ab.eventapi.service.mapper.dto.event.EventOutputDto;
+import com.ab.eventapi.utility.exception.EventNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,7 +36,7 @@ public class EventService {
 
     public EventOutputDto getEventById(Long id) {
         Event event = inMemoryRepo.getEventById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Event with id: " + id + " not found"));
+                .orElseThrow(() -> new EventNotFoundException(id));
         return eventMapper.convertEventIntoDto(event);
     }
 }
