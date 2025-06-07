@@ -11,7 +11,7 @@ import java.util.Optional;
 // Temporary DB
 @Repository
 public class InMemoryEventRepository {
-    private HashMap<Long, Event> events;
+    private final HashMap<Long, Event> events;
 
     public InMemoryEventRepository() {
         this.events = new HashMap<>();
