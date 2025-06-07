@@ -10,9 +10,21 @@ public class Event {
     private String description;
     private LocalDateTime startsAt;
 
+    private static long nextId = 1;
+
+    // JPA constructor
     public Event() {
     }
 
+    // In memory db constructor
+    public Event(String title, String description, LocalDateTime startsAt) {
+        this.id = nextId++;
+        this.title = title;
+        this.description = description;
+        this.startsAt = startsAt;
+    }
+
+    // Full constructor
     public Event(Long id, String title, String description, LocalDateTime startsAt) {
         this.id = id;
         this.title = title;
