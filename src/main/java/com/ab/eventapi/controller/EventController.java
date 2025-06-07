@@ -4,6 +4,7 @@ import com.ab.eventapi.service.EventService;
 import com.ab.eventapi.service.mapper.dto.event.EventInputDto;
 import com.ab.eventapi.service.mapper.dto.event.EventListDto;
 import com.ab.eventapi.service.mapper.dto.event.EventOutputDto;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +21,7 @@ public class EventController {
 
     @PostMapping(consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public EventOutputDto createEvent(@RequestBody EventInputDto eventInputDto) {
+    public EventOutputDto createEvent(@Valid @RequestBody EventInputDto eventInputDto) {
         return eventService.createEvent(eventInputDto);
     }
 
