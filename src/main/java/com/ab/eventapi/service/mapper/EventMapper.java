@@ -13,8 +13,6 @@ import java.util.stream.Collectors;
 @Component
 public class EventMapper {
 
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-
     public EventOutputDto convertEventIntoDto(Event event) {
         return new EventOutputDto(
                 event.getId(),
@@ -32,14 +30,13 @@ public class EventMapper {
         );
     }
 
-    public EventListDto convertEventIntoListDto(Event event) {
-        String formattedDate = event.getStartsAt().format(FORMATTER);
-        return new EventListDto(event.getTitle(), formattedDate);
-    }
-
     public List<EventListDto> convertEventListIntoEventListDtoList(List<Event> eventList) {
         return eventList.stream()
                 .map(this::convertEventIntoListDto)
                 .collect(Collectors.toList());
+    }
+
+    private EventListDto convertEventIntoListDto(Event event) {
+        return new EventListDto(event.getTitle(), event.getStartsAt());
     }
 }

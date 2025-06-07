@@ -4,9 +4,9 @@ import java.time.LocalDateTime;
 
 public class EventListDto {
     private String title;
-    private String startsAt;
+    private LocalDateTime startsAt;
 
-    public EventListDto(String title, String startsAt) {
+    public EventListDto(String title, LocalDateTime startsAt) {
         this.title = title;
         this.startsAt = startsAt;
     }
@@ -15,7 +15,7 @@ public class EventListDto {
         return title;
     }
 
-    public String getStartsAt() {
+    public LocalDateTime getStartsAt() {
         return startsAt;
     }
 }
