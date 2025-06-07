@@ -1,12 +1,11 @@
 package com.ab.eventapi.service.mapper;
 
 import com.ab.eventapi.model.Event;
-import com.ab.eventapi.service.mapper.dto.EventInputDto;
-import com.ab.eventapi.service.mapper.dto.EventListDto;
-import com.ab.eventapi.service.mapper.dto.EventOutputDto;
+import com.ab.eventapi.service.mapper.dto.event.EventInputDto;
+import com.ab.eventapi.service.mapper.dto.event.EventListDto;
+import com.ab.eventapi.service.mapper.dto.event.EventOutputDto;
 import org.springframework.stereotype.Component;
 
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 

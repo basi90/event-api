@@ -1,22 +1,16 @@
-package com.ab.eventapi.service.mapper.dto;
+package com.ab.eventapi.service.mapper.dto.event;
 
 import java.time.LocalDateTime;
 
-public class EventOutputDto {
-    private Long id;
+public class EventInputDto {
     private String title;
     private String description;
     private LocalDateTime startsAt;
 
-    public EventOutputDto(Long id, String title, String description, LocalDateTime startsAt) {
-        this.id = id;
+    public EventInputDto(String title, String description, LocalDateTime startsAt) {
         this.title = title;
         this.description = description;
         this.startsAt = startsAt;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getTitle() {
