@@ -6,6 +6,7 @@ import com.ab.eventapi.service.mapper.dto.event.EventListDto;
 import com.ab.eventapi.service.mapper.dto.event.EventOutputDto;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +30,7 @@ public class EventMapper {
         );
     }
 
-    public List<EventListDto> convertEventListIntoEventListDtoList(List<Event> eventList) {
+    public List<EventListDto> convertEventListIntoEventListDtoList(Collection<Event> eventList) {
         return eventList.stream()
                 .map(this::convertEventIntoListDto)
                 .collect(Collectors.toList());
