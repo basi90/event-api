@@ -18,7 +18,6 @@ import static org.hamcrest.Matchers.*;
 
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class EventControllerTest {
 
     private LocalDateTime fixedDateTime;
