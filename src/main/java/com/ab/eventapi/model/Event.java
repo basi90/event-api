@@ -1,9 +1,6 @@
 package com.ab.eventapi.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -12,10 +9,17 @@ import java.util.Objects;
 public class Event {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "event_seq_gen")
+    @SequenceGenerator(name = "event_seq_gen", sequenceName = "event_seq", allocationSize = 1)
     private Long id;
+
+    @Column(name = "title", nullable = false, length = 50)
     private String title;
+
+    @Column(name = "description", nullable = false)
     private String description;
+
+    @Column(name = "startsAt", nullable = false)
     private LocalDateTime startsAt;
 
     private static long nextId = 1;

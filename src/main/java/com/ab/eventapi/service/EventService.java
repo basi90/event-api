@@ -2,7 +2,6 @@ package com.ab.eventapi.service;
 
 import com.ab.eventapi.model.Event;
 import com.ab.eventapi.repository.EventRepository;
-import com.ab.eventapi.repository.InMemoryEventRepository;
 import com.ab.eventapi.service.mapper.EventMapper;
 import com.ab.eventapi.service.mapper.dto.event.EventInputDto;
 import com.ab.eventapi.service.mapper.dto.event.EventListDto;
@@ -20,12 +19,11 @@ public class EventService {
 
     private static final Logger logger = LoggerFactory.getLogger(EventService.class);
 
-    private final InMemoryEventRepository inMemoryRepo;
-    private  EventRepository eventRepository;
+    private final EventRepository eventRepository;
     private final EventMapper eventMapper;
 
-    public EventService(InMemoryEventRepository inMemoryRepo, EventMapper eventMapper) {
-        this.inMemoryRepo = inMemoryRepo;
+    public EventService(EventRepository eventRepository, EventMapper eventMapper) {
+        this.eventRepository = eventRepository;
         this.eventMapper = eventMapper;
     }
 
@@ -34,7 +32,7 @@ public class EventService {
         validateEventInput(eventInputDto);
 
         Event event = eventMapper.convertDtoToEvent(eventInputDto);
-        inMemoryRepo.saveEvent(event);
+        eventRepository.save(event);
 
         logger.debug("Event saved: {}", event);
         return eventMapper.convertEventIntoDto(event);
@@ -42,12 +40,12 @@ public class EventService {
 
     public List<EventListDto> getAllEvents() {
         logger.info("Fetching all events");
-        return eventMapper.convertEventListIntoEventListDtoList(inMemoryRepo.getAllEvents());
+        return eventMapper.convertEventListIntoEventListDtoList(eventRepository.findAll());
     }
 
     public EventOutputDto getEventById(Long id) {
         logger.info("Fetching event with id: {}", id);
-        Event event = inMemoryRepo.getEventById(id)
+        Event event = eventRepository.findById(id)
                 .orElseThrow(() -> new EventNotFoundException(id));
         return eventMapper.convertEventIntoDto(event);
     }

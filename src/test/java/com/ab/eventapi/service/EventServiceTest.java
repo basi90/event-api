@@ -1,7 +1,7 @@
 package com.ab.eventapi.service;
 
 import com.ab.eventapi.model.Event;
-import com.ab.eventapi.repository.InMemoryEventRepository;
+import com.ab.eventapi.repository.EventRepository;
 import com.ab.eventapi.service.mapper.EventMapper;
 import com.ab.eventapi.service.mapper.dto.event.EventInputDto;
 import com.ab.eventapi.service.mapper.dto.event.EventListDto;
@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 public class EventServiceTest {
 
     @Mock
-    private InMemoryEventRepository eventRepository;
+    private EventRepository eventRepository;
 
     @Mock
     private EventMapper eventMapper;
@@ -69,7 +69,7 @@ public class EventServiceTest {
         EventOutputDto result = eventService.createEvent(inputDto);
 
         assertThat(result).isEqualTo(outputDto);
-        verify(eventRepository).saveEvent(event);
+        verify(eventRepository).save(event);
     }
 
     @Test
@@ -96,7 +96,7 @@ public class EventServiceTest {
             )
         );
 
-        when(eventRepository.getAllEvents()).thenReturn(events);
+        when(eventRepository.findAll()).thenReturn(events);
         when(eventMapper.convertEventListIntoEventListDtoList(events)).thenReturn(expectedDtos);
 
         List<EventListDto> result = eventService.getAllEvents();
@@ -120,7 +120,7 @@ public class EventServiceTest {
                 fixedDateTime
         );
 
-        when(eventRepository.getEventById(id)).thenReturn(Optional.of(event));
+        when(eventRepository.findById(id)).thenReturn(Optional.of(event));
         when(eventMapper.convertEventIntoDto(event)).thenReturn(dto);
 
         EventOutputDto result = eventService.getEventById(id);
@@ -132,7 +132,7 @@ public class EventServiceTest {
     void givenInvalidId_whenGetEventById_thenThrowException() {
         Long id = 99L;
 
-        when(eventRepository.getEventById(id)).thenReturn(Optional.empty());
+        when(eventRepository.findById(id)).thenReturn(Optional.empty());
 
         assertThrows(EventNotFoundException.class, () -> {
             eventService.getEventById(id);
