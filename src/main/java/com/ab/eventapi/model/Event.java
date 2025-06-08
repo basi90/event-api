@@ -22,24 +22,10 @@ public class Event {
     @Column(name = "startsAt", nullable = false)
     private LocalDateTime startsAt;
 
-    private static long nextId = 1;
-
-    // JPA constructor
-
     public Event() {
     }
 
-    // In memory db constructor
     public Event(String title, String description, LocalDateTime startsAt) {
-        this.id = nextId++;
-        this.title = title;
-        this.description = description;
-        this.startsAt = startsAt;
-    }
-
-    // Full constructor
-    public Event(Long id, String title, String description, LocalDateTime startsAt) {
-        this.id = id;
         this.title = title;
         this.description = description;
         this.startsAt = startsAt;
