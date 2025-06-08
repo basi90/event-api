@@ -10,10 +10,8 @@ import com.ab.eventapi.utility.exception.EventNotFoundException;
 import com.ab.eventapi.utility.exception.InvalidInputException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,17 +59,6 @@ public class EventService {
         return eventMapper.convertEventIntoDto(event);
     }
 
-    @Scheduled(fixedRate = 60000)
-    public void notifyUpcomingEvents() {
-        logger.info("Checking for upcoming events");
-
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime timeThreshold = now.plusMinutes(4).plusSeconds(59);
-
-        List<Event> upcomingEvents = getEventsStartingBefore(now, timeThreshold);
-        logNotifications(upcomingEvents);
-    }
-
     private void validateEventInput(EventInputDto dto) {
         if (dto.getTitle() == null || dto.getTitle().trim().length() < 3) {
             throw new InvalidInputException("Title must be at least 3 characters long");
@@ -95,20 +82,5 @@ public class EventService {
             return comparator.reversed();
         }
         return comparator;
-    }
-
-    protected List<Event> getEventsStartingBefore(LocalDateTime now, LocalDateTime threshold) {
-        return eventRepository.findAll().stream()
-                .filter(event -> {
-                    LocalDateTime start = event.getStartsAt();
-                    return start.isAfter(now) && !start.isAfter(threshold);
-                })
-                .collect(Collectors.toList());
-    }
-
-    protected void logNotifications(List<Event> events) {
-        events.forEach(event -> {
-            logger.warn("Scheduled Notification: Event '{}' is starting at {}", event.getTitle(), event.getStartsAt());
-        });
     }
 }

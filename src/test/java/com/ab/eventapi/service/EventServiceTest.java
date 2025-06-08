@@ -146,42 +146,42 @@ public class EventServiceTest {
         });
     }
 
-    @Test
-    void whenEventsStartInLessThanFiveMinutes_thenTheyAreIncludedInNotification() {
-        LocalDateTime now = LocalDateTime.of(2025, 7, 7, 10, 0);
-        LocalDateTime withinThreshold = now.plusMinutes(4).plusSeconds(58);
-        LocalDateTime past = now.minusMinutes(1);
-        LocalDateTime tooFar = now.plusMinutes(10);
-
-        Event upcomingEvent = new Event("Soon", "desc", withinThreshold);
-        Event pastEvent = new Event("Past", "desc", past);
-        Event futureEvent = new Event("Far", "desc", tooFar);
-
-        when(eventRepository.findAll()).thenReturn(List.of(upcomingEvent, pastEvent, futureEvent));
-
-        EventService testService = new EventService(eventRepository, eventMapper) {
-            @Override
-            protected void logNotifications(List<Event> events) {
-                assertThat(events)
-                        .hasSize(1)
-                        .extracting(Event::getTitle)
-                        .containsExactly("Soon");
-            }
-
-            @Override
-            protected List<Event> getEventsStartingBefore(LocalDateTime now, LocalDateTime threshold) {
-                return super.getEventsStartingBefore(now, threshold);
-            }
-
-            @Override
-            public void notifyUpcomingEvents() {
-                LocalDateTime now = LocalDateTime.of(2025, 7, 7, 10, 0);
-                LocalDateTime threshold = now.plusMinutes(4).plusSeconds(59);
-                List<Event> upcomingEvents = getEventsStartingBefore(now, threshold);
-                logNotifications(upcomingEvents);
-            }
-        };
-
-        testService.notifyUpcomingEvents();
-    }
+//    @Test
+//    void whenEventsStartInLessThanFiveMinutes_thenTheyAreIncludedInNotification() {
+//        LocalDateTime now = LocalDateTime.of(2025, 7, 7, 10, 0);
+//        LocalDateTime withinThreshold = now.plusMinutes(4).plusSeconds(58);
+//        LocalDateTime past = now.minusMinutes(1);
+//        LocalDateTime tooFar = now.plusMinutes(10);
+//
+//        Event upcomingEvent = new Event("Soon", "desc", withinThreshold);
+//        Event pastEvent = new Event("Past", "desc", past);
+//        Event futureEvent = new Event("Far", "desc", tooFar);
+//
+//        when(eventRepository.findAll()).thenReturn(List.of(upcomingEvent, pastEvent, futureEvent));
+//
+//        EventService testService = new EventService(eventRepository, eventMapper) {
+//            @Override
+//            protected void logNotifications(List<Event> events) {
+//                assertThat(events)
+//                        .hasSize(1)
+//                        .extracting(Event::getTitle)
+//                        .containsExactly("Soon");
+//            }
+//
+//            @Override
+//            protected List<Event> getEventsStartingBefore(LocalDateTime now, LocalDateTime threshold) {
+//                return super.getEventsStartingBefore(now, threshold);
+//            }
+//
+//            @Override
+//            public void notifyUpcomingEvents() {
+//                LocalDateTime now = LocalDateTime.of(2025, 7, 7, 10, 0);
+//                LocalDateTime threshold = now.plusMinutes(4).plusSeconds(59);
+//                List<Event> upcomingEvents = getEventsStartingBefore(now, threshold);
+//                logNotifications(upcomingEvents);
+//            }
+//        };
+//
+//        testService.notifyUpcomingEvents();
+//    }
 }
