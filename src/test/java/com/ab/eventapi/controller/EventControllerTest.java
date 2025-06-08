@@ -1,10 +1,13 @@
 package com.ab.eventapi.controller;
 
+import com.ab.eventapi.model.Event;
+import com.ab.eventapi.repository.EventRepository;
 import com.ab.eventapi.service.mapper.dto.event.EventInputDto;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
@@ -18,6 +21,7 @@ import static org.hamcrest.Matchers.*;
 
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class EventControllerTest {
 
     private LocalDateTime fixedDateTime;
@@ -25,11 +29,17 @@ public class EventControllerTest {
     @LocalServerPort
     private int port;
 
+    @Autowired
+    private EventRepository eventRepository;
+
     @BeforeEach
     void setUp() {
         RestAssured.baseURI = "http://localhost";
         RestAssured.port = port;
         fixedDateTime = LocalDateTime.of(2025, 7, 7, 10, 0);
+
+        Event event = new Event("Title", "desc", fixedDateTime);
+        eventRepository.save(event);
     }
 
     @Test
@@ -115,6 +125,19 @@ public class EventControllerTest {
                 .then()
                 .statusCode(HttpStatus.OK.value())
                 .body("size()", greaterThanOrEqualTo(0));
+    }
+
+    @Test
+    void testGetAllEvents_withFilterAndOrder_returnsFilteredList() {
+        given()
+                .queryParam("title", "title") // use part of an existing title
+                .queryParam("order", "DESC")
+                .when()
+                .get("/events")
+                .then()
+                .statusCode(HttpStatus.OK.value())
+                .body("size()", greaterThanOrEqualTo(1))
+                .body("[0].title", containsStringIgnoringCase("title"));
     }
 
     @Test

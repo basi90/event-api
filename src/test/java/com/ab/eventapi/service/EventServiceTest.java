@@ -73,36 +73,43 @@ public class EventServiceTest {
     }
 
     @Test
-    void whenGetAllEvents_thenReturnListOfEventListDto() {
-        List<Event> events = List.of(new Event(
-                "title",
-                "description",
-                fixedDateTime
-            ),
-            new Event(
-                    "title2",
-                    "description2",
-                    fixedDateTime
-            )
-        );
-        List<EventListDto> expectedDtos = List.of(
-            new EventListDto(
-                    "title",
-                    fixedDateTime
-            ),
-            new EventListDto(
-                    "title2",
-                    fixedDateTime
-            )
+    void whenGetFilteredEventsWithAscOrder_thenReturnSortedList() {
+        Event e1 = new Event("Event1", "desc1", fixedDateTime);
+        Event e2 = new Event("Event2", "desc2", fixedDateTime.plusDays(1));
+        List<Event> unsorted = List.of(e2, e1); // unsorted on purpose
+
+        when(eventRepository.findAll()).thenReturn(unsorted);
+
+        List<EventListDto> expected = List.of(
+                new EventListDto("Event1", fixedDateTime),
+                new EventListDto("Event2", fixedDateTime.plusDays(1))
         );
 
-        when(eventRepository.findAll()).thenReturn(events);
-        when(eventMapper.convertEventListIntoEventListDtoList(events)).thenReturn(expectedDtos);
+        when(eventMapper.convertEventListIntoEventListDtoList(List.of(e1, e2))).thenReturn(expected);
 
-        List<EventListDto> result = eventService.getAllEvents();
+        List<EventListDto> result = eventService.getFilteredEvents(null, "ASC");
 
-        assertThat(result).hasSize(2);
-        assertThat(result).isEqualTo(expectedDtos);
+        assertThat(result).containsExactlyElementsOf(expected);
+    }
+
+    @Test
+    void whenGetFilteredEventsWithDescOrder_thenReturnSortedListReversed() {
+        Event e1 = new Event("Event1", "desc1", fixedDateTime);
+        Event e2 = new Event("Event2", "desc2", fixedDateTime.plusDays(1));
+        List<Event> unsorted = List.of(e1, e2); // unsorted on purpose
+
+        when(eventRepository.findAll()).thenReturn(unsorted);
+
+        List<EventListDto> expected = List.of(
+                new EventListDto("Event2", fixedDateTime.plusDays(1)),
+                new EventListDto("Event1", fixedDateTime)
+        );
+
+        when(eventMapper.convertEventListIntoEventListDtoList(List.of(e2, e1))).thenReturn(expected);
+
+        List<EventListDto> result = eventService.getFilteredEvents(null, "DESC");
+
+        assertThat(result).containsExactlyElementsOf(expected);
     }
 
     @Test

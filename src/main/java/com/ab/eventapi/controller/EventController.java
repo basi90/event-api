@@ -31,9 +31,13 @@ public class EventController {
     }
 
     @GetMapping(produces = "application/json")
-    public List<EventListDto> getAllEvents() {
+    @ResponseStatus(HttpStatus.OK)
+    public List<EventListDto> getAllEvents(
+            @RequestParam(required = false) String title,
+            @RequestParam(defaultValue = "ASC") String order
+        ) {
         logger.info("Received GET /events");
-        return eventService.getAllEvents();
+        return eventService.getFilteredEvents(title, order.toUpperCase());
     }
 
     @GetMapping(path = "/{id}", produces = "application/json")

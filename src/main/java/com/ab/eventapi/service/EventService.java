@@ -12,7 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EventService {
@@ -38,9 +40,16 @@ public class EventService {
         return eventMapper.convertEventIntoDto(event);
     }
 
-    public List<EventListDto> getAllEvents() {
-        logger.info("Fetching all events");
-        return eventMapper.convertEventListIntoEventListDtoList(eventRepository.findAll());
+    public List<EventListDto> getFilteredEvents(String title, String order) {
+        logger.info("Fetching events for title: {}", title);
+        List<Event> events = fetchEvents(title);
+        Comparator<Event> comparator = getDateComparator(order);
+
+        List<Event> sortedEvents = events.stream()
+                .sorted(comparator)
+                .collect(Collectors.toList());
+
+        return eventMapper.convertEventListIntoEventListDtoList(sortedEvents);
     }
 
     public EventOutputDto getEventById(Long id) {
@@ -57,5 +66,21 @@ public class EventService {
         if (dto.getDescription() == null || dto.getDescription().trim().length() < 3) {
             throw new InvalidInputException("Description must be at least 3 characters long");
         }
+    }
+
+    private List<Event> fetchEvents(String title) {
+        logger.info("Fetching all events with title: {}", title);
+        if(title != null && !title.isBlank()) {
+            return eventRepository.findByTitleContainingIgnoreCase(title);
+        }
+        return eventRepository.findAll();
+    }
+
+    private Comparator<Event> getDateComparator(String order) {
+        Comparator<Event> comparator  = Comparator.comparing(Event::getStartsAt);
+        if("DESC".equalsIgnoreCase(order)) {
+            return comparator.reversed();
+        }
+        return comparator;
     }
 }
