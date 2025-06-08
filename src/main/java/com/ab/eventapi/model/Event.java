@@ -19,7 +19,7 @@ public class Event {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "startsAt", nullable = false)
+    @Column(name = "starts_at", nullable = false)
     private LocalDateTime startsAt;
 
     public Event() {
