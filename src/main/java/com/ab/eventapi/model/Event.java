@@ -32,6 +32,13 @@ public class Event {
         this.startsAt = startsAt;
     }
 
+    public Event(Long id, String title, String description, LocalDateTime startsAt) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.startsAt = startsAt;
+    }
+
     public Long getId() {
         return id;
     }
