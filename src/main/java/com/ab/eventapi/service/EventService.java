@@ -9,12 +9,16 @@ import com.ab.eventapi.service.mapper.dto.event.EventListDto;
 import com.ab.eventapi.service.mapper.dto.event.EventOutputDto;
 import com.ab.eventapi.utility.exception.EventNotFoundException;
 import com.ab.eventapi.utility.exception.InvalidInputException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class EventService {
+
+    private static final Logger logger = LoggerFactory.getLogger(EventService.class);
 
     private final InMemoryEventRepository inMemoryRepo;
     private  EventRepository eventRepository;
@@ -26,18 +30,23 @@ public class EventService {
     }
 
     public EventOutputDto createEvent(EventInputDto eventInputDto) {
+        logger.info("Creating event with title: {}", eventInputDto.getTitle());
         validateEventInput(eventInputDto);
 
         Event event = eventMapper.convertDtoToEvent(eventInputDto);
         inMemoryRepo.saveEvent(event);
+
+        logger.debug("Event saved: {}", event);
         return eventMapper.convertEventIntoDto(event);
     }
 
     public List<EventListDto> getAllEvents() {
+        logger.info("Fetching all events");
         return eventMapper.convertEventListIntoEventListDtoList(inMemoryRepo.getAllEvents());
     }
 
     public EventOutputDto getEventById(Long id) {
+        logger.info("Fetching event with id: {}", id);
         Event event = inMemoryRepo.getEventById(id)
                 .orElseThrow(() -> new EventNotFoundException(id));
         return eventMapper.convertEventIntoDto(event);
