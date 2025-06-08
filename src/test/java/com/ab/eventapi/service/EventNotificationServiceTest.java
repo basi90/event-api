@@ -2,7 +2,7 @@ package com.ab.eventapi.service;
 
 import com.ab.eventapi.model.Event;
 import com.ab.eventapi.repository.EventRepository;
-import org.junit.jupiter.api.BeforeEach;
+import com.ab.eventapi.service.notifier.Notifier;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

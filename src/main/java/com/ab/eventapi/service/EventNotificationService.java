@@ -2,6 +2,7 @@ package com.ab.eventapi.service;
 
 import com.ab.eventapi.model.Event;
 import com.ab.eventapi.repository.EventRepository;
+import com.ab.eventapi.service.notifier.Notifier;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

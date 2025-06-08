@@ -1,4 +1,4 @@
-package com.ab.eventapi.service;
+package com.ab.eventapi.service.notifier;
 
 import com.ab.eventapi.model.Event;
 
