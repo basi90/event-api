@@ -1,41 +1,32 @@
 package com.ab.eventapi.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
+@Table(name = "events")
 public class Event {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "event_seq_gen")
+    @SequenceGenerator(name = "event_seq_gen", sequenceName = "event_seq", allocationSize = 1)
     private Long id;
+
+    @Column(name = "title", nullable = false, length = 50)
     private String title;
+
+    @Column(name = "description", nullable = false)
     private String description;
+
+    @Column(name = "starts_at", nullable = false)
     private LocalDateTime startsAt;
-
-    private static long nextId = 1;
-
-    // JPA constructor
 
     public Event() {
     }
 
-    // In memory db constructor
     public Event(String title, String description, LocalDateTime startsAt) {
-        this.id = nextId++;
-        this.title = title;
-        this.description = description;
-        this.startsAt = startsAt;
-    }
-
-    // Full constructor
-    public Event(Long id, String title, String description, LocalDateTime startsAt) {
-        this.id = id;
         this.title = title;
         this.description = description;
         this.startsAt = startsAt;
