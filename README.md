@@ -43,3 +43,12 @@ http://localhost:8080/swagger-ui/index.html
 - **Authentication and Authorization**: Add user login and role-based access control  
 - **Webhook/Event Integration**: Send real-time notifications via email, Slack, or external webhooks  
 - **Admin UI Dashboard**: A web interface for managing and monitoring events  
+
+## If I Had More Time, I Would...
+
+- Design a basic user system with registration, login, and subscriptions  
+- Replace log-based notifications with real-time email or webhook integrations  
+- Build a front-end UI for managing and viewing events  
+- Improve filtering with date ranges and multiple field criteria  
+- Migrate notified event tracking to Redis or Postgres  
+- Deploy the app publicly using platforms like Railway or Render  
