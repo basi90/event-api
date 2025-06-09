@@ -17,24 +17,24 @@ A modular Spring Boot application for managing and scheduling events. Users can 
 
 ## Getting Started
 
-### Clone the repository and enter its directory
+### 1. Clone the repository and enter its directory
 ```bash
 git clone https://github.com/basi90/event-api.git
 cd event-api
 ```
 
-### Launch Docker and run
+### 2. Install Docker and run the application with Docker Compose
 ```bash
 docker compose up --build
 ```
-This command will build the Spring Boot application, start the PostgreSQL database container, apply the Flyway migrations, and run the app at:
+This will:
+- Build the Spring Boot application
+- Start a PostgreSQL container
+- Apply Flyway database migrations
+- Launch the app at: http://localhost:8080
 
-http://localhost:8080
-
-To explore the API, open your browser at:
-
-http://localhost:8080/swagger-ui/index.html
-
+### 3. Explore the API (Swagger UI)
+- Visit: http://localhost:8080/swagger-ui/index.html
 ---
 
 ## Future Improvements
