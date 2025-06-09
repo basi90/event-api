@@ -31,7 +31,7 @@ This will:
 - Build the Spring Boot application
 - Start a PostgreSQL container
 - Apply Flyway database migrations
-- Launch the app at: [http://localhost:8080](http://localhost:8080) *(open in a new tab)*
+- Launch the app at: http://localhost:8080
 
 ### 3. Explore the API (Swagger UI)
 - Visit: [http://localhost:8080/swagger-ui/index.htm](http://localhost:8080/swagger-ui/index.htm) *(open in a new tab)*
