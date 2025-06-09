@@ -1,6 +1,6 @@
 # Event API
 
-A simple Spring Boot application for managing events. It supports creating, retrieving, and filtering events by title and start time, and includes a notification scheduler to log upcoming events starting within the next 5 minutes.
+A Spring Boot application for managing events. It supports creating, retrieving, and filtering events by title and start time, and includes a notification scheduler to log upcoming events starting within the next 5 minutes.
 
 ## Features
 
