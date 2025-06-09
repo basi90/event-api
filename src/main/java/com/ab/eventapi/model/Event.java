@@ -69,9 +69,6 @@ public class Event {
 
     @Override
     public String toString() {
-        // add dateTime to String
         return "Event: " + title;
     }
-
-    // private method to convert the dateTime to String
 }
