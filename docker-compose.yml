@@ -1,0 +1,37 @@
+services:
+  db:
+    image: postgres:16
+    container_name: event-db
+    environment:
+      POSTGRES_DB: eventdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - event-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: event-api
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/eventdb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    ports:
+      - "8080:8080"
+    networks:
+      - event-network
+
+volumes:
+  pgdata:
+
+networks:
+  event-network:
+    driver: bridge
