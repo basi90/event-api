@@ -1,17 +1,17 @@
 # Event API
 
-A modular Spring Boot application to manage and schedule events. It supports creating events, retrieving them by ID, filtering by title and start time, and includes a scheduled task to notify (via logging) when events are about to begin.
+A modular Spring Boot application for managing and scheduling events. Users can create and retrieve events, filter them by title or start time, and rely on a background task to log upcoming events automatically.
 
 ---
 
 ## Features
 
-- Create and store events with title, description, and start time  
-- Filter events by title and order by start time (ASC/DESC)  
-- Scheduled background check for events starting within minutes
-- Database migration handled via Flyway  
-- Docker + Docker Compose setup  
-- Swagger UI available for testing endpoints  
+- Add, list, and fetch events by ID  
+- Filter events by title and sort by start time (ASC/DESC)  
+- Scheduled background task to log events starting within 5 minutes  
+- Database migrations handled via Flyway  
+- Docker and Docker Compose setup for local development  
+- OpenAPI docs available via Swagger UI
 
 ---
 
@@ -35,6 +35,8 @@ To explore the API, open your browser at:
 
 http://localhost:8080/swagger-ui/index.html
 
+---
+
 ## Future Improvements
 
 - **Pagination**: Support for paginated responses on event listing  
@@ -44,6 +46,8 @@ http://localhost:8080/swagger-ui/index.html
 - **Webhook/Event Integration**: Send real-time notifications via email, Slack, or external webhooks  
 - **Admin UI Dashboard**: A web interface for managing and monitoring events  
 
+---
+
 ## If I Had More Time, I Would...
 
 - Design a basic user system with registration, login, and subscriptions  
@@ -51,4 +55,4 @@ http://localhost:8080/swagger-ui/index.html
 - Build a front-end UI for managing and viewing events  
 - Improve filtering with date ranges and multiple field criteria  
 - Migrate notified event tracking to Redis or Postgres  
-- Deploy the app publicly using platforms like Railway or Render  
+- Deploy the app publicly using platforms 
