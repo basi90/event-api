@@ -41,7 +41,6 @@ public class EventService {
     }
 
     public List<EventListDto> getFilteredEvents(String title, String order) {
-        logger.info("Fetching events for title: {}", title);
         List<Event> events = fetchEvents(title);
         Comparator<Event> comparator = getDateComparator(order);
 
