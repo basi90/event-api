@@ -34,7 +34,7 @@ This will:
 - Launch the app at: http://localhost:8080
 
 ### 3. Explore the API (Swagger UI)
-- Visit: [http://localhost:8080/swagger-ui/index.htm](http://localhost:8080/swagger-ui/index.html) *(open in a new tab)*
+- Visit: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html) *(open in a new tab)*
 ---
 
 ## Future Improvements
